@@ -6,13 +6,13 @@ const API_ENDPOINT = {
 };
 
 const queryKeys = {
-  savingsProducts: 'savingsProducts',
+  savingsProducts: ['savingsProducts'],
 };
 
 export const useSavingsProductsQuery = () => {
   return useQuery<SavingsProductQueryResponse[]>({
     queryFn: async () => http.get(API_ENDPOINT.SAVINGS_PRODUCTS),
-    queryKey: [queryKeys.savingsProducts],
+    queryKey: queryKeys.savingsProducts,
   });
 };
 
