@@ -21,12 +21,10 @@ export function UserFilteredSavingsProducts({ selectedProduct, onSelectProduct, 
   const availableProduct = applyUserFilter(data, userFilter);
 
   return (
-    <>
-      <SavingsProducts
-        products={availableProduct}
-        selectedProduct={selectedProduct}
-        onSelectProduct={onSelectProduct}
-      />
-    </>
+    <SavingsProducts
+      products={availableProduct}
+      selectedProduct={selectedProduct}
+      onSelectProduct={onSelectProduct}
+    />
   );
 }

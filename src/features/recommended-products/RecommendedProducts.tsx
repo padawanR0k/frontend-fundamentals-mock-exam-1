@@ -30,8 +30,13 @@ export function RecommendedProducts({ selectedProduct, onSelectProduct, userFilt
 }
 
 function orderByAnnualRateDesc(a: SavingProduct, b: SavingProduct) {
-  if (a.annualRate !== b.annualRate) {
-    return b.annualRate - a.annualRate;
+  if (a.annualRate === b.annualRate) {
+    return orderByMinMonthlyAmountAsc(a, b);
   }
-  return a.minMonthlyAmount - b.minMonthlyAmount;
+
+  return b.annualRate - a.annualRate;
+}
+
+function orderByMinMonthlyAmountAsc(a: SavingProduct, b: SavingProduct) {
+  return a.minMonthlyAmount - b.minMonthlyAmount > 0 ? 1 : -1;
 }

@@ -81,8 +81,6 @@ export function SavingsCalculatorPage() {
           <SavingsCalculatorResult
             onSelectProduct={handleSelectProduct}
             selectedProduct={selectedProduct}
-            monthlyDeposit={monthlyDeposit}
-            depositPeriod={depositPeriod}
             targetAmount={targetAmount}
             userFilter={{
               monthlyDeposit,

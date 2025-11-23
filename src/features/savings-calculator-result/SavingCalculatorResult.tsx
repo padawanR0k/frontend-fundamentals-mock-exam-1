@@ -4,18 +4,14 @@ import { RecommendedProducts } from '../recommended-products/RecommendedProducts
 import { UserFilter } from '../../entities/SavingProducts';
 
 interface SavingsCalculatorProps {
-  monthlyDeposit: number;
-  depositPeriod: number;
-  targetAmount: number;
   selectedProduct: SavingProduct | null;
+  targetAmount: number;
   onSelectProduct: (product: SavingProduct) => void;
   userFilter: UserFilter;
 }
 
 export function SavingsCalculatorResult({
   selectedProduct,
-  monthlyDeposit,
-  depositPeriod,
   targetAmount,
   onSelectProduct,
   userFilter,
@@ -25,8 +21,8 @@ export function SavingsCalculatorResult({
       <Spacing size={8} />
       {selectedProduct ? (
         <SavingsCalculatorResultContents
-          monthlyDeposit={monthlyDeposit}
-          depositPeriod={depositPeriod}
+          monthlyDeposit={userFilter.monthlyDeposit}
+          depositPeriod={userFilter.depositPeriod}
           targetAmount={targetAmount}
           annualRate={selectedProduct.annualRate}
         />
