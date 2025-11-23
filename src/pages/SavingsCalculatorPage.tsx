@@ -13,6 +13,11 @@ export function SavingsCalculatorPage() {
   const [monthlyDeposit, setMonthlyDeposit] = useState<number>(0);
   const [depositPeriod, setDepositPeriod] = useState<number>(0);
 
+  const userFilter = {
+    monthlyDeposit,
+    depositPeriod,
+  };
+
   const handleSelectProduct = (product: SavingProduct) => {
     setSelectedProduct(product);
   };
@@ -71,10 +76,7 @@ export function SavingsCalculatorPage() {
           <UserFilteredSavingsProducts
             onSelectProduct={handleSelectProduct}
             selectedProduct={selectedProduct}
-            userFilter={{
-              monthlyDeposit,
-              depositPeriod,
-            }}
+            userFilter={userFilter}
           />
         </Tabs.Panel>
         <Tabs.Panel value="results">
@@ -82,10 +84,7 @@ export function SavingsCalculatorPage() {
             onSelectProduct={handleSelectProduct}
             selectedProduct={selectedProduct}
             targetAmount={targetAmount}
-            userFilter={{
-              monthlyDeposit,
-              depositPeriod,
-            }}
+            userFilter={userFilter}
           />
         </Tabs.Panel>
       </Tabs>
