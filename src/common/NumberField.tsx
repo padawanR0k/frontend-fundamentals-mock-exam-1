@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react";
-import { TextField } from "tosslib";
+import { ChangeEvent } from 'react';
+import { TextField } from 'tosslib';
 
 interface NumberFieldProps {
   value: number;
@@ -21,11 +21,7 @@ export function NumberField({ value, onChange, label, placeholder, suffix }: Num
 
   const numberValue = value !== undefined ? value.toString() : '';
 
-  return <TextField
-    onChange={handleChange}
-    value={numberValue}
-    label={label}
-    placeholder={placeholder}
-    suffix={suffix}
-  />;
+  return (
+    <TextField onChange={handleChange} value={numberValue} label={label} placeholder={placeholder} suffix={suffix} />
+  );
 }

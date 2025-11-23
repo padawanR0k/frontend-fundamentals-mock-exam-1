@@ -3,8 +3,8 @@ import { Tabs } from 'common/Tabs';
 import { useState } from 'react';
 import { Border, NavigationBar, SelectBottomSheet, Spacing } from 'tosslib';
 import { SavingsCalculator } from '../features/savings-calculator/SavingCalculator';
-import { SavingsProducts } from '../features/savings-products/SavingProducts';
-import { SavingProduct } from '../features/savings-products/type';
+import { SavingProduct } from '../common/type.ts';
+import { UserFilteredSavingsProducts } from '../features/userFiltered-savings-products/UserFilteredSavingsProducts';
 
 export function SavingsCalculatorPage() {
   const [selectedProduct, setSelectedProduct] = useState<SavingProduct | null>(null);
@@ -68,17 +68,23 @@ export function SavingsCalculatorPage() {
         ]}
       >
         <Tabs.Panel value="products">
-          <SavingsProducts
+          <UserFilteredSavingsProducts
             onSelectProduct={handleSelectProduct}
             selectedProduct={selectedProduct}
-            userTarget={{
+            userFilter={{
               monthlyDeposit,
               depositPeriod,
             }}
           />
         </Tabs.Panel>
         <Tabs.Panel value="results">
-          <SavingsCalculator monthlyDeposit={1} depositPeriod={1} targetAmount={1} yearlyInterestRate={1} />
+          <SavingsCalculator
+            isSavingProductSelected={selectedProduct !== null}
+            monthlyDeposit={1}
+            depositPeriod={1}
+            targetAmount={1}
+            yearlyInterestRate={1}
+          />
         </Tabs.Panel>
       </Tabs>
     </>

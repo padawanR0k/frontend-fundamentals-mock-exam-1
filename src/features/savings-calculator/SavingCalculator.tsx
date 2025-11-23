@@ -6,55 +6,62 @@ interface SavingsCalculatorProps {
   targetAmount: number;
 
   yearlyInterestRate: number;
+  isSavingProductSelected: boolean;
 }
 
 export function SavingsCalculator({
   monthlyDeposit,
-  depositPeriod: 저축_기간,
-  targetAmount: 목표_금액,
-  yearlyInterestRate: 연이자율,
+  depositPeriod,
+  targetAmount,
+  yearlyInterestRate,
+  isSavingProductSelected,
 }: SavingsCalculatorProps) {
-  const 예상수입금액 = monthlyDeposit * 저축_기간 * (1 + 연이자율 * 0.5);
-  const 목표금액과의차이 = 목표_금액 - 예상수입금액;
-  const 추천월납입금액 = Math.round(목표_금액 / (저축_기간 * (1 + 연이자율 * 0.5)) / 1000) * 1000;
+  const 예상수입금액 = monthlyDeposit * depositPeriod * (1 + yearlyInterestRate * 0.5);
+  const 목표금액과의차이 = targetAmount - 예상수입금액;
+  const 추천월납입금액 = Math.round(targetAmount / (depositPeriod * (1 + yearlyInterestRate * 0.5)) / 1000) * 1000;
 
   return (
     <>
       <Spacing size={8} />
-
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="2RowTypeA"
-            top="예상 수익 금액"
-            topProps={{ color: colors.grey600 }}
-            bottom={`${예상수입금액.toLocaleString()}원`}
-            bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
+      {isSavingProductSelected ? (
+        <>
+          <ListRow
+            contents={
+              <ListRow.Texts
+                type="2RowTypeA"
+                top="예상 수익 금액"
+                topProps={{ color: colors.grey600 }}
+                bottom={`${예상수입금액.toLocaleString()}원`}
+                bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
+              />
+            }
           />
-        }
-      />
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="2RowTypeA"
-            top="목표 금액과의 차이"
-            topProps={{ color: colors.grey600 }}
-            bottom={`${목표금액과의차이.toLocaleString()}원`}
-            bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
+          <ListRow
+            contents={
+              <ListRow.Texts
+                type="2RowTypeA"
+                top="목표 금액과의 차이"
+                topProps={{ color: colors.grey600 }}
+                bottom={`${목표금액과의차이.toLocaleString()}원`}
+                bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
+              />
+            }
           />
-        }
-      />
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="2RowTypeA"
-            top="추천 월 납입 금액"
-            topProps={{ color: colors.grey600 }}
-            bottom={`${추천월납입금액.toLocaleString()}원`}
-            bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
+          <ListRow
+            contents={
+              <ListRow.Texts
+                type="2RowTypeA"
+                top="추천 월 납입 금액"
+                topProps={{ color: colors.grey600 }}
+                bottom={`${추천월납입금액.toLocaleString()}원`}
+                bottomProps={{ fontWeight: 'bold', color: colors.blue600 }}
+              />
+            }
           />
-        }
-      />
+        </>
+      ) : (
+        <ListRow contents={<ListRow.Texts type="1RowTypeA" top="상품을 선택해주세요." />} />
+      )}
 
       <Spacing size={8} />
       <Border height={16} />
@@ -93,9 +100,6 @@ export function SavingsCalculator({
       />
 
       <Spacing size={40} />
-
-      {/* 아래는 사용자가 적금 상품을 선택하지 않고 계산 결과 탭을 선택했을 때 출력해주세요. */}
-      {/* <ListRow contents={<ListRow.Texts type="1RowTypeA" top="상품을 선택해주세요." />} /> */}
     </>
   );
 }
