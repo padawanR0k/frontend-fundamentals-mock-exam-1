@@ -1,4 +1,6 @@
 import { Border, colors, ListHeader, ListRow, Spacing } from 'tosslib';
+import { SavingProduct } from '../../common/type';
+import { RecommendedProducts } from '../recommended-products/RecommendedProducts';
 
 interface SavingsCalculatorProps {
   monthlyDeposit: number;
@@ -7,14 +9,19 @@ interface SavingsCalculatorProps {
 
   yearlyInterestRate: number;
   isSavingProductSelected: boolean;
+
+  selectedProduct: SavingProduct | null;
+  onSelectProduct: (product: SavingProduct) => void;
 }
 
-export function SavingsCalculator({
+export function SavingsCalculatorResult({
   monthlyDeposit,
   depositPeriod,
   targetAmount,
   yearlyInterestRate,
   isSavingProductSelected,
+  selectedProduct,
+  onSelectProduct,
 }: SavingsCalculatorProps) {
   const 예상수입금액 = monthlyDeposit * depositPeriod * (1 + yearlyInterestRate * 0.5);
   const 목표금액과의차이 = targetAmount - 예상수입금액;
@@ -70,34 +77,7 @@ export function SavingsCalculator({
       <ListHeader title={<ListHeader.TitleParagraph fontWeight="bold">추천 상품 목록</ListHeader.TitleParagraph>} />
       <Spacing size={12} />
 
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="3RowTypeA"
-            top={'기본 정기적금'}
-            topProps={{ fontSize: 16, fontWeight: 'bold', color: colors.grey900 }}
-            middle={`연 이자율: 3.2%`}
-            middleProps={{ fontSize: 14, color: colors.blue600, fontWeight: 'medium' }}
-            bottom={`100,000원 ~ 500,000원 | 12개월`}
-            bottomProps={{ fontSize: 13, color: colors.grey600 }}
-          />
-        }
-        onClick={() => {}}
-      />
-      <ListRow
-        contents={
-          <ListRow.Texts
-            type="3RowTypeA"
-            top={'고급 정기적금'}
-            topProps={{ fontSize: 16, fontWeight: 'bold', color: colors.grey900 }}
-            middle={`연 이자율: 2.8%`}
-            middleProps={{ fontSize: 14, color: colors.blue600, fontWeight: 'medium' }}
-            bottom={`50,000원 ~ 1,000,000원 | 24개월`}
-            bottomProps={{ fontSize: 13, color: colors.grey600 }}
-          />
-        }
-        onClick={() => {}}
-      />
+      <RecommendedProducts selectedProduct={selectedProduct} onSelectProduct={onSelectProduct} />
 
       <Spacing size={40} />
     </>

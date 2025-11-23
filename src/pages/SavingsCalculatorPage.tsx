@@ -2,9 +2,9 @@ import { NumberField } from 'common/NumberField';
 import { Tabs } from 'common/Tabs';
 import { useState } from 'react';
 import { Border, NavigationBar, SelectBottomSheet, Spacing } from 'tosslib';
-import { SavingsCalculator } from '../features/savings-calculator/SavingCalculator';
 import { SavingProduct } from '../common/type.ts';
 import { UserFilteredSavingsProducts } from '../features/userFiltered-savings-products/UserFilteredSavingsProducts';
+import { SavingsCalculatorResult } from '../features/savings-calculator-result/SavingCalculatorResult';
 
 export function SavingsCalculatorPage() {
   const [selectedProduct, setSelectedProduct] = useState<SavingProduct | null>(null);
@@ -78,7 +78,9 @@ export function SavingsCalculatorPage() {
           />
         </Tabs.Panel>
         <Tabs.Panel value="results">
-          <SavingsCalculator
+          <SavingsCalculatorResult
+            onSelectProduct={handleSelectProduct}
+            selectedProduct={selectedProduct}
             isSavingProductSelected={selectedProduct !== null}
             monthlyDeposit={1}
             depositPeriod={1}

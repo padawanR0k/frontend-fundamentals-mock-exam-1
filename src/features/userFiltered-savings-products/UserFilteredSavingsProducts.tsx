@@ -1,6 +1,6 @@
 import { useSavingsProductsQuery } from '../../api';
 import { SavingProduct } from '../../common/type.ts';
-import { SavingsProducts } from '../../common/SavingProducts.tsx';
+import { SavingsProducts } from '../../entities/SavingProducts.tsx';
 
 interface SavingsProductsProps {
   selectedProduct: SavingProduct | null;

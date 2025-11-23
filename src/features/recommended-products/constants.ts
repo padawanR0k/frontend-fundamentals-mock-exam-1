@@ -1,0 +1,1 @@
+export const RECOMMEND_SAVIING_PRODUCTS_COUNT = 2;

@@ -1,5 +1,5 @@
 import { Assets, colors, ListRow } from 'tosslib';
-import { SavingProduct } from './type';
+import { SavingProduct } from '../common/type';
 
 interface SavingsProductsProps {
   products: SavingProduct[];
