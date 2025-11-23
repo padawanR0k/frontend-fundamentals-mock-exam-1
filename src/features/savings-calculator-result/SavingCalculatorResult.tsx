@@ -1,7 +1,7 @@
 import { Border, colors, ListHeader, ListRow, Spacing } from 'tosslib';
 import { SavingProduct } from '../../common/type';
-import { RecommendedProducts } from '../recommended-products/RecommendedProducts';
 import { UserFilter } from '../../entities/SavingProducts';
+import { RecommendedProducts } from '../recommended-products/RecommendedProducts';
 
 interface SavingsCalculatorProps {
   selectedProduct: SavingProduct | null;
@@ -48,6 +48,8 @@ export function SavingsCalculatorResult({
   );
 }
 
+const 추천월납입금액_반올림위치 = 1000;
+
 function SavingsCalculatorResultContents({
   monthlyDeposit,
   depositPeriod,
@@ -59,9 +61,10 @@ function SavingsCalculatorResultContents({
   targetAmount: number;
   annualRate: number;
 }) {
-  const 예상수입금액 = monthlyDeposit * depositPeriod * (1 + annualRate * 0.5);
+  const 예상이자율 = depositPeriod * (1 + annualRate / 100 * 0.5);
+  const 예상수입금액 = monthlyDeposit * 예상이자율;
   const 목표금액과의차이 = targetAmount - 예상수입금액;
-  const 추천월납입금액 = Math.round(targetAmount / (depositPeriod * (1 + annualRate * 0.5)) / 1000) * 1000;
+  const 추천월납입금액 = Math.round(targetAmount / 예상이자율 / 추천월납입금액_반올림위치) * 추천월납입금액_반올림위치;
   return (
     <>
       <ListRow
