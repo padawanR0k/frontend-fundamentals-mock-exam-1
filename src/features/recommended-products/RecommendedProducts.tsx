@@ -1,22 +1,24 @@
-import { SavingsProducts } from '../../entities/SavingProducts';
 import { useSavingsProductsQuery } from '../../api';
 import { SavingProduct } from '../../common/type';
+import { applyUserFilter, SavingsProducts, UserFilter } from '../../entities/SavingProducts';
 import { RECOMMEND_SAVIING_PRODUCTS_COUNT } from './constants';
 
 interface RecommendedProductsProps {
   selectedProduct: SavingProduct | null;
   onSelectProduct: (product: SavingProduct) => void;
+  userFilter: UserFilter;
 }
 
-export function RecommendedProducts({ selectedProduct, onSelectProduct }: RecommendedProductsProps) {
+export function RecommendedProducts({ selectedProduct, onSelectProduct, userFilter }: RecommendedProductsProps) {
   const { data: products } = useSavingsProductsQuery();
 
   if (!products) {
     return null;
   }
 
-  const orderedProducts = products.sort(orderByAnnualRateDesc);
-  const recommendedProducts = orderedProducts.slice(0, RECOMMEND_SAVIING_PRODUCTS_COUNT);
+  const recommendedProducts = applyUserFilter(products, userFilter)
+    .sort(orderByAnnualRateDesc)
+    .slice(0, RECOMMEND_SAVIING_PRODUCTS_COUNT);
 
   return (
     <SavingsProducts

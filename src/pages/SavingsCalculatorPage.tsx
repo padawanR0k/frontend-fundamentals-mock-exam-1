@@ -84,6 +84,10 @@ export function SavingsCalculatorPage() {
             monthlyDeposit={monthlyDeposit}
             depositPeriod={depositPeriod}
             targetAmount={targetAmount}
+            userFilter={{
+              monthlyDeposit,
+              depositPeriod,
+            }}
           />
         </Tabs.Panel>
       </Tabs>

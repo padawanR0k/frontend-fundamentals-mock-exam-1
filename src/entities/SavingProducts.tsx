@@ -34,3 +34,36 @@ export function SavingsProducts({ products, selectedProduct, onSelectProduct }: 
     </>
   );
 }
+
+export interface UserFilter {
+  monthlyDeposit: number;
+  depositPeriod: number;
+}
+
+export function filterByUserTarget(product: SavingProduct, userFilter: UserFilter): boolean {
+  if (product.minMonthlyAmount > userFilter.monthlyDeposit) {
+    return false;
+  }
+
+  if (product.maxMonthlyAmount < userFilter.monthlyDeposit) {
+    return false;
+  }
+
+  if (product.availableTerms !== userFilter.depositPeriod) {
+    return false;
+  }
+
+  return true;
+}
+
+export function isFilterActive(userFilter: UserFilter): boolean {
+  return userFilter.monthlyDeposit > 0 && userFilter.depositPeriod > 0;
+}
+
+export function applyUserFilter(products: SavingProduct[], userFilter: UserFilter): SavingProduct[] {
+  if (!isFilterActive(userFilter)) {
+    return products;
+  }
+
+  return products.filter(product => filterByUserTarget(product, userFilter));
+}

@@ -1,6 +1,6 @@
 import { useSavingsProductsQuery } from '../../api';
 import { SavingProduct } from '../../common/type.ts';
-import { SavingsProducts } from '../../entities/SavingProducts.tsx';
+import { applyUserFilter, SavingsProducts } from '../../entities/SavingProducts';
 
 interface SavingsProductsProps {
   selectedProduct: SavingProduct | null;
@@ -18,10 +18,7 @@ export function UserFilteredSavingsProducts({ selectedProduct, onSelectProduct, 
     return null;
   }
 
-  const isFilterOn = userFilter.monthlyDeposit > 0 && userFilter.depositPeriod > 0;
-  const availableProduct = isFilterOn
-    ? data.filter(product => filterByUserTarget({ ...product, ...userFilter }))
-    : data;
+  const availableProduct = applyUserFilter(data, userFilter);
 
   return (
     <>
@@ -32,39 +29,4 @@ export function UserFilteredSavingsProducts({ selectedProduct, onSelectProduct, 
       />
     </>
   );
-}
-
-/**
- * - 월 납입액
- *     - 최소 월 납입액보다 크고
- *     - 최대 월 납입액보다 작아야 함
- * - 저축 기간
- *     - 저축 기간과 동일해야 함
- */
-function filterByUserTarget({
-  minMonthlyAmount,
-  maxMonthlyAmount,
-  availableTerms,
-  monthlyDeposit,
-  depositPeriod,
-}: {
-  minMonthlyAmount: number;
-  maxMonthlyAmount: number;
-  availableTerms: number;
-  monthlyDeposit: number;
-  depositPeriod: number;
-}) {
-  if (minMonthlyAmount > monthlyDeposit) {
-    return false;
-  }
-
-  if (maxMonthlyAmount < monthlyDeposit) {
-    return false;
-  }
-
-  if (availableTerms !== depositPeriod) {
-    return false;
-  }
-
-  return true;
 }

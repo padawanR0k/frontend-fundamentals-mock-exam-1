@@ -1,6 +1,7 @@
 import { Border, colors, ListHeader, ListRow, Spacing } from 'tosslib';
 import { SavingProduct } from '../../common/type';
 import { RecommendedProducts } from '../recommended-products/RecommendedProducts';
+import { UserFilter } from '../../entities/SavingProducts';
 
 interface SavingsCalculatorProps {
   monthlyDeposit: number;
@@ -8,6 +9,7 @@ interface SavingsCalculatorProps {
   targetAmount: number;
   selectedProduct: SavingProduct | null;
   onSelectProduct: (product: SavingProduct) => void;
+  userFilter: UserFilter;
 }
 
 export function SavingsCalculatorResult({
@@ -16,6 +18,7 @@ export function SavingsCalculatorResult({
   depositPeriod,
   targetAmount,
   onSelectProduct,
+  userFilter,
 }: SavingsCalculatorProps) {
   return (
     <>
@@ -38,7 +41,11 @@ export function SavingsCalculatorResult({
       <ListHeader title={<ListHeader.TitleParagraph fontWeight="bold">추천 상품 목록</ListHeader.TitleParagraph>} />
       <Spacing size={12} />
 
-      <RecommendedProducts selectedProduct={selectedProduct} onSelectProduct={onSelectProduct} />
+      <RecommendedProducts
+        selectedProduct={selectedProduct}
+        onSelectProduct={onSelectProduct}
+        userFilter={userFilter}
+      />
 
       <Spacing size={40} />
     </>
