@@ -12,10 +12,6 @@ interface RecommendedProductsProps {
 export function RecommendedProducts({ selectedProduct, onSelectProduct, userFilter }: RecommendedProductsProps) {
   const { data: products } = useSavingsProductsQuery();
 
-  if (!products) {
-    return null;
-  }
-
   const recommendedProducts = applyUserFilter(products, userFilter)
     .sort(orderByAnnualRateDesc)
     .slice(0, RECOMMEND_SAVIING_PRODUCTS_COUNT);

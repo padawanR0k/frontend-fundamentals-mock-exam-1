@@ -14,10 +14,6 @@ interface SavingsProductsProps {
 export function UserFilteredSavingsProducts({ selectedProduct, onSelectProduct, userFilter }: SavingsProductsProps) {
   const { data } = useSavingsProductsQuery();
 
-  if (!data) {
-    return null;
-  }
-
   const availableProduct = applyUserFilter(data, userFilter);
 
   return (

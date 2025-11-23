@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import { Border, colors, ListHeader, ListRow, Spacing } from 'tosslib';
+import { Loading } from '../../common/Loading';
 import { SavingProduct } from '../../common/type';
 import { UserFilter } from '../../entities/SavingProducts';
 import { RecommendedProducts } from '../recommended-products/RecommendedProducts';
@@ -37,11 +39,13 @@ export function SavingsCalculatorResult({
       <ListHeader title={<ListHeader.TitleParagraph fontWeight="bold">추천 상품 목록</ListHeader.TitleParagraph>} />
       <Spacing size={12} />
 
-      <RecommendedProducts
-        selectedProduct={selectedProduct}
-        onSelectProduct={onSelectProduct}
-        userFilter={userFilter}
-      />
+      <Suspense fallback={<Loading />}>
+        <RecommendedProducts
+          selectedProduct={selectedProduct}
+          onSelectProduct={onSelectProduct}
+          userFilter={userFilter}
+        />
+      </Suspense>
 
       <Spacing size={40} />
     </>

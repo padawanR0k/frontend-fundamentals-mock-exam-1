@@ -1,7 +1,8 @@
 import { NumberField } from 'common/NumberField';
 import { Tabs } from 'common/Tabs';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Border, NavigationBar, SelectBottomSheet, Spacing } from 'tosslib';
+import { Loading } from '../common/Loading';
 import { SavingProduct } from '../common/type.ts';
 import { SavingsCalculatorResult } from '../features/savings-calculator-result/SavingCalculatorResult';
 import { UserFilteredSavingsProducts } from '../features/userFiltered-savings-products/UserFilteredSavingsProducts';
@@ -73,11 +74,13 @@ export function SavingsCalculatorPage() {
         ]}
       >
         <Tabs.Panel value="products">
-          <UserFilteredSavingsProducts
-            onSelectProduct={handleSelectProduct}
-            selectedProduct={selectedProduct}
-            userFilter={userFilter}
-          />
+          <Suspense fallback={<Loading />}>
+            <UserFilteredSavingsProducts
+              onSelectProduct={handleSelectProduct}
+              selectedProduct={selectedProduct}
+              userFilter={userFilter}
+            />
+          </Suspense>
         </Tabs.Panel>
         <Tabs.Panel value="results">
           <SavingsCalculatorResult
