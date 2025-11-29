@@ -1,8 +1,8 @@
-import { useSavingsProductsQuery } from '../../api';
 import { SavingProduct } from '../../common/type.ts';
 import { applyUserFilter, SavingsProducts } from '../../entities/SavingProducts';
 
 interface SavingsProductsProps {
+  products: SavingProduct[];
   selectedProduct: SavingProduct | null;
   onSelectProduct: (product: SavingProduct) => void;
   userFilter: {
@@ -11,10 +11,8 @@ interface SavingsProductsProps {
   };
 }
 
-export function UserFilteredSavingsProducts({ selectedProduct, onSelectProduct, userFilter }: SavingsProductsProps) {
-  const { data } = useSavingsProductsQuery();
-
-  const availableProduct = applyUserFilter(data, userFilter);
+export function UserFilteredSavingsProducts({ products, selectedProduct, onSelectProduct, userFilter }: SavingsProductsProps) {
+  const availableProduct = applyUserFilter(products, userFilter);
 
   return (
     <SavingsProducts

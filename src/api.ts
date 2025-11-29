@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { http } from 'tosslib';
 
 const API_ENDPOINT = {
@@ -9,11 +9,15 @@ const queryKeys = {
   savingsProducts: ['savingsProducts'],
 };
 
-export const useSavingsProductsQuery = () => {
-  return useSuspenseQuery<SavingsProductQueryResponse[]>({
-    queryFn: async () => http.get(API_ENDPOINT.SAVINGS_PRODUCTS),
+export const useSavingsProductsQueryOptions = () => {
+  return queryOptions({
+    queryFn: async () => http.get<SavingsProductQueryResponse[]>(API_ENDPOINT.SAVINGS_PRODUCTS),
     queryKey: queryKeys.savingsProducts,
-  });
+  })
+};
+
+export const useSavingsProductsQuery = () => {
+  return useSuspenseQuery(useSavingsProductsQueryOptions());
 };
 
 interface SavingsProductQueryResponse {

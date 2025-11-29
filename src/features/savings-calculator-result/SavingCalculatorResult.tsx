@@ -6,6 +6,7 @@ import { UserFilter } from '../../entities/SavingProducts';
 import { RecommendedProducts } from '../recommended-products/RecommendedProducts';
 
 interface SavingsCalculatorProps {
+  products: SavingProduct[];
   selectedProduct: SavingProduct | null;
   targetAmount: number;
   onSelectProduct: (product: SavingProduct) => void;
@@ -13,6 +14,7 @@ interface SavingsCalculatorProps {
 }
 
 export function SavingsCalculatorResult({
+  products,
   selectedProduct,
   targetAmount,
   onSelectProduct,
@@ -39,13 +41,12 @@ export function SavingsCalculatorResult({
       <ListHeader title={<ListHeader.TitleParagraph fontWeight="bold">추천 상품 목록</ListHeader.TitleParagraph>} />
       <Spacing size={12} />
 
-      <Suspense fallback={<Loading />}>
-        <RecommendedProducts
-          selectedProduct={selectedProduct}
-          onSelectProduct={onSelectProduct}
-          userFilter={userFilter}
-        />
-      </Suspense>
+      <RecommendedProducts
+        products={products}
+        selectedProduct={selectedProduct}
+        onSelectProduct={onSelectProduct}
+        userFilter={userFilter}
+      />
 
       <Spacing size={40} />
     </>

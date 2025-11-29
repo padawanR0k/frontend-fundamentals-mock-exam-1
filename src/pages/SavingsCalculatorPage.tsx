@@ -6,6 +6,8 @@ import { Loading } from "../common/Loading";
 import { SavingProduct } from "../common/type.ts";
 import { SavingsCalculatorResult } from "../features/savings-calculator-result/SavingCalculatorResult";
 import { UserFilteredSavingsProducts } from "../features/userFiltered-savings-products/UserFilteredSavingsProducts";
+import { SuspenseQuery } from "@suspensive/react-query";
+import { useSavingsProductsQueryOptions } from "api.ts";
 
 export function SavingsCalculatorPage() {
 	const [selectedProduct, setSelectedProduct] = useState<SavingProduct | null>(
@@ -68,21 +70,33 @@ export function SavingsCalculatorPage() {
 					<Tabs.Item value="results" label="계산 결과" />
 				</Tabs.List>
 				<Tabs.Panel value="products">
-					<Suspense fallback={<Loading />}>
-						<UserFilteredSavingsProducts
-							onSelectProduct={handleSelectProduct}
-							selectedProduct={selectedProduct}
-							userFilter={userFilter}
-						/>
-					</Suspense>
+          <Suspense fallback={<Loading />}>
+            <SuspenseQuery {...useSavingsProductsQueryOptions()}>
+              {({ data }) => (
+                <UserFilteredSavingsProducts
+                  products={data}
+                  onSelectProduct={handleSelectProduct}
+                  selectedProduct={selectedProduct}
+                  userFilter={userFilter}
+                />
+              )}
+            </SuspenseQuery>
+          </Suspense>
 				</Tabs.Panel>
 				<Tabs.Panel value="results">
-					<SavingsCalculatorResult
-						onSelectProduct={handleSelectProduct}
-						selectedProduct={selectedProduct}
-						targetAmount={targetAmount}
-						userFilter={userFilter}
-					/>
+          <Suspense fallback={<Loading />}>
+            <SuspenseQuery {...useSavingsProductsQueryOptions()}>
+              {({ data }) => (
+                <SavingsCalculatorResult
+                  products={data}
+                  onSelectProduct={handleSelectProduct}
+                  selectedProduct={selectedProduct}
+                  targetAmount={targetAmount}
+                  userFilter={userFilter}
+                />
+              )}
+            </SuspenseQuery>
+          </Suspense>
 				</Tabs.Panel>
 			</Tabs>
 		</>
